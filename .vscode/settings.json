@@ -1,0 +1,20 @@
+{
+    "java.compile.nullAnalysis.mode": "automatic",
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "192.168.8.30",
+            "port": 3306,
+            "driver": "MariaDB",
+            "name": "minids",
+            "database": "ry",
+            "username": "root",
+            "password": "azsOFT2022"
+        }
+    ]
+}

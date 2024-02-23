@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.minids.mapper.ProductionMapper">
+
+<resultMap type="Production" id="productResultMap">
+     <id property="saasId" column="saas_id"/>
+     <id property="storeId" column="store_id"/>
+     <id property="spuId" column="spu_id"/>
+     <result property="title" column="title"/>
+     <result property="primaryImage" column="primary_image"/>
+     <result property="available" column="available"/>
+     <result property="minSalePrice" column="min_sale_price"/>
+     <result property="minLinePrice" column="min_line_price"/>
+     <result property="maxSalePrice" column="max_sale_price"/>
+     <result property="maxLinePrice" column="max_line_price"/>
+     <result property="spuStockQuantity" column="spu_stock_quantity"/>
+     <result property="soldNum" column="sold_num"/>
+     <result property="isPutOnSale" column="is_put_on_sale"/>
+     <result property="Video" column="_video"/>
+     <result property="Etitle" column="_etitle"/>
+     <result property="titlePrefixTags" column="title_prefix_tags"/>
+     <result property="thumb" column="thumb"/>
+  </resultMap>
+	
+	<sql id="selectProductionVo">
+        select * 
+		from Minids_Products
+    </sql>
+	
+	<select id="selectProductList" parameterType="Production" resultMap="productResultMap">
+		<include refid="selectProductionVo"/>
+		<where>
+			<if test="title != null and title != ''">
+				AND title like concat('%', #{title}, '%')
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectProductAll" resultMap="productResultMap">
+		<include refid="selectProductionVo"/>
+	</select>
+	
+	<select id="selectProductById" parameterType="String" resultMap="productResultMap">
+		<include refid="selectProductionVo"/>
+		where  saasId=#{saasId} and storeId = #{storeId} and spuId=#{spuId}
+	</select>
+	
+	<delete id="deleteProductById" parameterType="String">
+ 		delete from Minids_Products where saasId=#{saasId} and storeId = #{storeId} and spuId=#{spuId}
+ 	</delete>
+ 	
+ 	<delete id="deleteProductByIds" parameterType="list">
+		delete from Minids_Products 
+		where <foreach collection="list" item="item" open="" separator=" OR " close="">
+		(saasId = #{item.saasId} AND storeId = #{item.storeId} AND spuId = #{item.spuId})
+	    </foreach>
+    </delete>
+
+
+   <update id="updateProduct" parameterType="Production">
+	 UPDATE Minids_Products
+		<set>
+		<if test="storeId != null">storeId=#{storeId},</if>
+		<if test="spuId != null">spuId=#{spuId},</if>
+		<if test="title != null and title != ''">title=#{title},</if>
+		<if test="primaryImage != null and primaryImage != ''">primaryImage=#{primaryImage},</if>
+		<if test="available != null">available=#{available},</if>
+		<if test="minSalePrice != null">minSalePrice=#{minSalePrice},</if>
+		<if test="minLinePrice  != null">minLinePrice=#{minLinePrice},</if>
+		<if test="maxSalePrice  != null">maxSalePrice=#{maxSalePrice},</if>
+		<if test="maxLinePrice  != null">maxLinePrice=#{maxLinePrice},</if>
+		<if test="spuStockQuantity  != null">spuStockQuantity=#{spuStockQuantity},</if>
+		<if test="soldNum != null">soldNum=#{soldNum},</if>
+		<if test="isPutOnSale != null">isPutOnSale=#{isPutOnSale},</if>
+		<if test="Video != null and Video != ''">Video=#{Video},</if>
+		<if test="Etitle != null and Etitle != ''">Etitle=#{Etitle},</if>
+		<if test="titlePrefixTags != null and titlePrefixTags != ''">titlePrefixTags=#{titlePrefixTags},</if>
+		<if test="thumb != null and thumb != ''">thumb=#{thumb},</if>
+		</set>
+		WHERE saasId=#{saasId} and storeId = #{storeId} and spuId=#{spuId}
+    </update>
+ 	 	
+ 	<insert id="insertProduct" parameterType="Production" useGeneratedKeys="true" keyProperty="storeId">
+ 		INSERT INTO Minids_Products
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="saasId != null">saasId,</if>
+			<if test="storeId != null">storeId,</if>
+			<if test="spuId != null">spuId,</if>
+			<if test="title != null">title,</if>
+			<if test="primaryImage != null">primaryImage,</if>
+			<if test="available != null">available,</if>
+			<if test="minSalePrice != null">minSalePrice,</if>
+			<if test="minLinePrice != null">minLinePrice,</if>
+			<if test="maxSalePrice != null">maxSalePrice,</if>
+			<if test="maxLinePrice != null">maxLinePrice,</if>
+			<if test="spuStockQuantity != null">spuStockQuantity,</if>
+			<if test="soldNum != null">soldNum,</if>
+			<if test="isPutOnSale != null">isPutOnSale,</if>
+			<if test="Video != null">Video,</if>
+			<if test="Etitle != null">Etitle,</if>
+			<if test="titlePrefixTags != null">titlePrefixTags,</if>
+			<if test="thumb != null">thumb</if>
+		</trim>
+		<trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+			<if test="saasId != null">#{saasId},</if>
+			<if test="storeId != null">#{storeId},</if>
+			<if test="spuId != null">#{spuId},</if>
+			<if test="title != null">#{title},</if>
+			<if test="primaryImage != null">#{primaryImage},</if>
+			<if test="available != null">#{available},</if>
+			<if test="minSalePrice != null">#{minSalePrice},</if>
+			<if test="minLinePrice != null">#{minLinePrice},</if>
+			<if test="maxSalePrice != null">#{maxSalePrice},</if>
+			<if test="maxLinePrice != null">#{maxLinePrice},</if>
+			<if test="spuStockQuantity != null">#{spuStockQuantity},</if>
+			<if test="soldNum != null">#{soldNum},</if>
+			<if test="isPutOnSale != null">#{isPutOnSale},</if>
+			<if test="Video != null">#{Video},</if>
+			<if test="Etitle != null">#{Etitle},</if>
+			<if test="titlePrefixTags != null">#{titlePrefixTags},</if>
+			<if test="thumb != null">#{thumb}</if>
+		</trim>
+	</insert>
+
+</mapper> 

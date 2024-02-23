@@ -15,7 +15,7 @@
         <ruoyi.version>4.7.8</ruoyi.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
+        <java.version>11</java.version>
         <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
         <shiro.version>1.13.0</shiro.version>
         <thymeleaf.extras.shiro.version>2.1.0</thymeleaf.extras.shiro.version>
@@ -183,6 +183,20 @@
                 <version>${ruoyi.version}</version>
             </dependency>
 
+            <!-- 小程序后台管理-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-minids</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
+            <!-- 测试模块-->
+            <dependency>
+               <groupId>com.ruoyi</groupId>
+               <artifactId>ruoyi-test</artifactId>
+               <version>${ruoyi.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -193,6 +207,8 @@
         <module>ruoyi-quartz</module>
         <module>ruoyi-generator</module>
         <module>ruoyi-common</module>
+        <module>ruoyi-minids</module>
+        <module>ruoyi-test</module>
     </modules>
     <packaging>pom</packaging>
 

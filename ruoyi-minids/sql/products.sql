@@ -1,0 +1,20 @@
+CREATE TABLE Minids_Products (
+    saasId varchar(255) NOT NULL DEFAULT '88888',
+    storeId varchar(255) NOT NULL,
+    spuId varchar(255) NOT NULL,
+    title varchar(255),
+    primaryImage varchar(255),
+    available int,
+    minSalePrice decimal(18, 2),
+    minLinePrice decimal(18, 2),
+    maxSalePrice decimal(18, 2),
+    maxLinePrice decimal(18, 2),
+    spuStockQuantity int,
+    soldNum int,
+    isPutOnSale int,
+    Video varchar(255) DEFAULT '255',
+    Etitle varchar(255) DEFAULT '255',
+    titlePrefixTags varchar(255),
+    thumb varchar(255),
+    PRIMARY KEY (saasId, storeId, spuId)
+);
