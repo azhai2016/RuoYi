@@ -14,12 +14,16 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface DataScope
-{
+public @interface DataScope {
     /**
      * 部门表的别名
      */
     public String deptAlias() default "";
+
+    /**
+     * 分类表的别名
+     */
+    public String categoryAlias() default "";
 
     /**
      * 用户表的别名

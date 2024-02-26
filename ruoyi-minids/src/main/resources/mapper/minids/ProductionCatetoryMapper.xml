@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.minids.mapper.ProductionCategoryMapper">
+
+	<resultMap type="ProductionCategory" id="ProductionCategoryResult">
+		<id     property="categoryId"     column="category_id"     />
+		<result property="parentId"   column="parent_id"   />
+		<result property="ancestors"  column="ancestors"   />
+		<result property="categoryName"   column="category_name"   />
+		<result property="orderNum"   column="order_num"   />
+		<result property="status"     column="status"      />
+		<result property="delFlag"    column="del_flag"    />
+		<result property="parentName" column="parent_name" />
+		<result property="createBy"   column="create_by"   />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy"   column="update_by"   />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+	
+	<sql id="selectProductionCategoryVo">
+        select d.category_id, d.parent_id, d.ancestors, d.category_name, d.order_num, d.status, d.del_flag, d.create_by, d.create_time 
+        from minids_products_category d
+    </sql>
+    
+	<select id="selectProductionCategoryTree" parameterType="Long" resultType="String">
+		select concat(d.category_id, d.category_name) as catetory_name
+		from minids_products_categroy d
+			left join Minids_products rd on d.category_id = rd.category_id
+		where d.del_flag = '0' and rd.category_id = #{catetoryId}
+		order by d.parent_id, d.order_num
+	</select>
+
+	<select id="selectCategoryAll" resultMap="ProductionCategoryResult">
+        <include refid="selectProductionCategoryVo"/>
+        where d.del_flag = '0'
+		order by d.parent_id, d.order_num
+	</select>
+	
+	<select id="selectCategoryList" parameterType="ProductionCategory" resultMap="ProductionCategoryResult">
+        <include refid="selectProductionCategoryVo"/>
+        where d.del_flag = '0'
+		<if test="categoryId != null and categoryId != 0">
+			AND category_id = #{categoryId}
+		</if>
+        <if test="parentId != null and parentId != 0">
+			AND parent_id = #{parentId}
+		</if>
+		<if test="categoryName != null and categoryName != ''">
+			AND category_name like concat('%', #{categoryName}, '%')
+		</if>
+		<if test="status != null and status != ''">
+			AND status = #{status}
+		</if>
+		<!-- 数据范围过滤 
+		${params.dataScope} -->
+		order by d.parent_id, d.order_num
+    </select>
+	
+	<select id="checkCategoryExistProduction" parameterType="Long" resultType="int">
+		select count(1) from Minids_products where category_id = #{categoryId} and del_flag = '0'
+	</select>
+	
+	<select id="selectProductionCategoryCount" parameterType="ProductionCategory" resultType="int">
+		select count(1) from minids_products_category
+		where del_flag = '0'
+		<if test="categoryId != null and categoryId != 0"> and category_id = #{categoryId} </if>
+		<if test="parentId != null and parentId != 0"> and parent_id = #{parentId} </if>
+	</select>
+	
+	<select id="checkCategoryNameUnique" resultMap="ProductionCategoryResult">
+	    <include refid="selectProductionCategoryVo"/>
+		where category_name=#{deptName} and parent_id = #{parentId} and del_flag = '0' limit 1
+	</select>
+
+	<select id="selectCategoryById" parameterType="Long" resultMap="ProductionCategoryResult">
+		select d.category_id, d.parent_id, d.ancestors, d.category_name, d.order_num,  d.status,
+			(select category_name from minids_products_category where catetory_id = d.parent_id) parent_name
+		from minids_products_category d
+		where d.category_id = #{categoryId}
+	</select>
+
+	<select id="selectChildrenCategoryById" parameterType="Long" resultMap="ProductionCategoryResult">
+		select * from minids_products_category where find_in_set(#{categoryId}, ancestors)
+	</select>
+	
+	<select id="selectNormalChildrenCategoryById" parameterType="Long" resultType="int">
+		select count(*) from minids_products_category where status = 0 and del_flag = '0' and find_in_set(#{categoryId}, ancestors)
+	</select>
+	
+	<insert id="insertCategory" parameterType="ProductionCategory">
+ 		insert into minids_products_category(
+ 			<if test="categoryId != null and categoryId != 0">category_id,</if>
+ 			<if test="parentId != null and parentId != 0">parent_id,</if>
+ 			<if test="categoryName != null and categoryName != ''">category_name,</if>
+ 			<if test="ancestors != null and ancestors != ''">ancestors,</if>
+ 			<if test="orderNum != null">order_num,</if>
+ 			<if test="status != null">status,</if>
+ 			<if test="createBy != null and createBy != ''">create_by,</if>
+ 			create_time
+ 		)values(
+ 			<if test="categoryId != null and categoryId != 0">#{categoryId},</if>
+ 			<if test="parentId != null and parentId != 0">#{parentId},</if>
+ 			<if test="categoryName != null and categoryName != ''">#{categoryName},</if>
+ 			<if test="ancestors != null and ancestors != ''">#{ancestors},</if>
+ 			<if test="orderNum != null">#{orderNum},</if>
+ 			<if test="status != null">#{status},</if>
+ 			<if test="createBy != null and createBy != ''">#{createBy},</if>
+ 			sysdate()
+ 		)
+	</insert>
+	
+	<update id="updateCategory" parameterType="ProductionCategory">
+ 		update minids_products_category
+ 		<set>
+ 			<if test="parentId != null and parentId != 0">parent_id = #{parentId},</if>
+ 			<if test="categoryName != null and categoryName != ''">category_name = #{deptName},</if>
+ 			<if test="ancestors != null and ancestors != ''">ancestors = #{ancestors},</if>
+ 			<if test="orderNum != null">order_num = #{orderNum},</if>
+ 			<if test="status != null and status != ''">status = #{status},</if>
+ 			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+ 			update_time = sysdate()
+ 		</set>
+ 		where dept_id = #{deptId}
+	</update>
+	
+	<update id="updateCategoryChildren" parameterType="java.util.List">
+	    update minids_products_category set ancestors =
+	    <foreach collection="categories" item="item" index="index"
+	        separator=" " open="case category_id" close="end">
+	        when #{item.categoryId} then #{item.ancestors}
+	    </foreach>
+	    where category_id in
+	    <foreach collection="categories" item="item" index="index"
+	        separator="," open="(" close=")">
+	        #{item.categoryId}
+	    </foreach>
+	 </update>
+
+	<delete id="deleteCategoryById" parameterType="Long">
+		update minids_products_category set del_flag = '2' where category_id = #{categoryId}
+	</delete>
+	
+	<update id="updateCategoryStatusNormal" parameterType="Long">
+ 	    update minids_products_category set status = '0' where category_id in 
+ 	    <foreach collection="array" item="categoryId" open="(" separator="," close=")">
+        	#{categoryId}
+        </foreach>
+	</update>
+
+</mapper> 

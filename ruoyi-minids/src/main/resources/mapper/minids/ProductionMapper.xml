@@ -22,11 +22,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      <result property="Etitle" column="_etitle"/>
      <result property="titlePrefixTags" column="title_prefix_tags"/>
      <result property="thumb" column="thumb"/>
+	 <result property="catetoryId" column="catetory_id"/>
   </resultMap>
 	
 	<sql id="selectProductionVo">
         select * 
-		from Minids_Products
+		from Minids_products
     </sql>
 	
 	<select id="selectProductList" parameterType="Production" resultMap="productResultMap">
@@ -48,11 +49,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<delete id="deleteProductById" parameterType="String">
- 		delete from Minids_Products where saasId=#{saasId} and storeId = #{storeId} and spuId=#{spuId}
+ 		delete from Minids_products where saasId=#{saasId} and storeId = #{storeId} and spuId=#{spuId}
  	</delete>
  	
  	<delete id="deleteProductByIds" parameterType="list">
-		delete from Minids_Products 
+		delete from Minids_products 
 		where <foreach collection="list" item="item" open="" separator=" OR " close="">
 		(saasId = #{item.saasId} AND storeId = #{item.storeId} AND spuId = #{item.spuId})
 	    </foreach>
@@ -60,7 +61,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
    <update id="updateProduct" parameterType="Production">
-	 UPDATE Minids_Products
+	 UPDATE Minids_products
 		<set>
 		<if test="storeId != null">storeId=#{storeId},</if>
 		<if test="spuId != null">spuId=#{spuId},</if>
@@ -78,12 +79,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="Etitle != null and Etitle != ''">Etitle=#{Etitle},</if>
 		<if test="titlePrefixTags != null and titlePrefixTags != ''">titlePrefixTags=#{titlePrefixTags},</if>
 		<if test="thumb != null and thumb != ''">thumb=#{thumb},</if>
+		<if test="catetoryId != null and catetoryId != ''">catetoryId=#{catetoryId},</if>
 		</set>
 		WHERE saasId=#{saasId} and storeId = #{storeId} and spuId=#{spuId}
     </update>
  	 	
  	<insert id="insertProduct" parameterType="Production" useGeneratedKeys="true" keyProperty="storeId">
- 		INSERT INTO Minids_Products
+ 		INSERT INTO Minids_products
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="saasId != null">saasId,</if>
 			<if test="storeId != null">storeId,</if>
@@ -102,6 +104,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="Etitle != null">Etitle,</if>
 			<if test="titlePrefixTags != null">titlePrefixTags,</if>
 			<if test="thumb != null">thumb</if>
+			<if test="catetoryId != null">catetoryId</if>
 		</trim>
 		<trim prefix="VALUES (" suffix=")" suffixOverrides=",">
 			<if test="saasId != null">#{saasId},</if>
@@ -121,6 +124,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="Etitle != null">#{Etitle},</if>
 			<if test="titlePrefixTags != null">#{titlePrefixTags},</if>
 			<if test="thumb != null">#{thumb}</if>
+			<if test="catetoryId != null">#{catetoryId}</if>
 		</trim>
 	</insert>
 
