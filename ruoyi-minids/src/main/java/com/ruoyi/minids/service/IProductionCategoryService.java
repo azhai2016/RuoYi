@@ -110,4 +110,7 @@ public interface IProductionCategoryService {
      * @param deptId 部门id
      */
     public void checkCategoryDataScope(Long categoryId);
+
+    public List<Ztree> prodCategoryTreeData(Production production);
+
 }

@@ -17,9 +17,12 @@ import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.ShiroUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.spring.SpringUtils;
+import com.ruoyi.minids.domain.Production;
 import com.ruoyi.minids.domain.ProductionCategory;
 import com.ruoyi.minids.mapper.ProductionCategoryMapper;
 import com.ruoyi.minids.service.IProductionCategoryService;
+
+import net.sf.ehcache.util.ProductInfo;
 
 /**
  * 部门管理 服务实现
@@ -50,7 +53,7 @@ public class ProductionCategoryServiceImpl implements IProductionCategoryService
      * @return 部门信息集合
      */
     @Override
-    //@DataScope(categoryAlias = "d")
+    // @DataScope(categoryAlias = "d")
     public List<ProductionCategory> selectCategoryAll() {
         return productionCategoryMapper.selectCategoryAll();
     }
@@ -65,7 +68,8 @@ public class ProductionCategoryServiceImpl implements IProductionCategoryService
     @DataScope(deptAlias = "d")
     public List<Ztree> selectCategoryTree(ProductionCategory productionCategory) {
         List<ProductionCategory> categoryList = productionCategoryMapper.selectCategoryList(productionCategory);
-        List<Ztree> ztrees = initZtree(categoryList);
+        System.out.println(categoryList);
+        List<Ztree> ztrees = initZtree(categoryList, null);
         return ztrees;
     }
 
@@ -94,21 +98,20 @@ public class ProductionCategoryServiceImpl implements IProductionCategoryService
      * @param role 角色对象
      * @return 部门列表（数据权限）
      */
-    // @Override
-    // public List<Ztree> roleDeptTreeData(SysRole role) {
-    // Long roleId = role.getRoleId();
-    // List<Ztree> ztrees = new ArrayList<Ztree>();
-    // List<SysDept> deptList = SpringUtils.getAopProxy(this).selectDeptList(new
-    // SysDept());
-    // if (StringUtils.isNotNull(roleId)) {
-    // List<String> roleDeptList =
-    // productionCategoryMapper.selectRoleDeptTree(roleId);
-    // ztrees = initZtree(deptList, roleDeptList);
-    // } else {
-    // ztrees = initZtree(deptList);
-    // }
-    // return ztrees;
-    // }
+    @Override
+    public List<Ztree> prodCategoryTreeData(Production production) {
+        int categoryId = production.getCategoryId();
+        List<Ztree> ztrees = new ArrayList<Ztree>();
+        List<ProductionCategory> pcList = SpringUtils.getAopProxy(this).selectCategoryList(new ProductionCategory());
+        System.out.println(pcList);
+        if (StringUtils.isNotNull(categoryId)) {
+            List<String> categoryList = productionCategoryMapper.selectProductionCategoryTree(categoryId);
+            ztrees = initZtree(pcList, categoryList);
+        } else {
+            ztrees = initZtree(pcList);
+        }
+        return ztrees;
+    }
 
     /**
      * 对象转部门树

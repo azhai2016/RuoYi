@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<sql id="selectProductionVo">
         select * 
-		from Minids_products
+		from minids_products
     </sql>
 	
 	<select id="selectProductList" parameterType="Production" resultMap="productResultMap">
@@ -49,11 +49,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<delete id="deleteProductById" parameterType="String">
- 		delete from Minids_products where saasId=#{saasId} and storeId = #{storeId} and spuId=#{spuId}
+ 		delete from minids_products where saasId=#{saasId} and storeId = #{storeId} and spuId=#{spuId}
  	</delete>
  	
  	<delete id="deleteProductByIds" parameterType="list">
-		delete from Minids_products 
+		delete from minids_products 
 		where <foreach collection="list" item="item" open="" separator=" OR " close="">
 		(saasId = #{item.saasId} AND storeId = #{item.storeId} AND spuId = #{item.spuId})
 	    </foreach>
@@ -61,7 +61,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
    <update id="updateProduct" parameterType="Production">
-	 UPDATE Minids_products
+	 UPDATE minids_products
 		<set>
 		<if test="storeId != null">storeId=#{storeId},</if>
 		<if test="spuId != null">spuId=#{spuId},</if>
@@ -85,7 +85,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
  	 	
  	<insert id="insertProduct" parameterType="Production" useGeneratedKeys="true" keyProperty="storeId">
- 		INSERT INTO Minids_products
+ 		INSERT INTO minids_products
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="saasId != null">saasId,</if>
 			<if test="storeId != null">storeId,</if>

@@ -30,5 +30,6 @@ public class Production extends BaseEntity implements Serializable {
     private String Etitle = "255";
     private String titlePrefixTags;
     private String thumb;
+    private int CategoryId;
 
 }

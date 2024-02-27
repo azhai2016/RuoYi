@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectProductionCategoryTree" parameterType="Long" resultType="String">
 		select concat(d.category_id, d.category_name) as catetory_name
 		from minids_products_categroy d
-			left join Minids_products rd on d.category_id = rd.category_id
+			left join minids_products rd on d.category_id = rd.category_id
 		where d.del_flag = '0' and rd.category_id = #{catetoryId}
 		order by d.parent_id, d.order_num
 	</select>
@@ -53,13 +53,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="status != null and status != ''">
 			AND status = #{status}
 		</if>
-		<!-- 数据范围过滤 
-		${params.dataScope} -->
+		<!-- 数据范围过滤 -->
+		<!-- {params.dataScope} -->
 		order by d.parent_id, d.order_num
     </select>
 	
 	<select id="checkCategoryExistProduction" parameterType="Long" resultType="int">
-		select count(1) from Minids_products where category_id = #{categoryId} and del_flag = '0'
+		select count(1) from minids_products where category_id = #{categoryId} and del_flag = '0'
 	</select>
 	
 	<select id="selectProductionCategoryCount" parameterType="ProductionCategory" resultType="int">
@@ -76,7 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="selectCategoryById" parameterType="Long" resultMap="ProductionCategoryResult">
 		select d.category_id, d.parent_id, d.ancestors, d.category_name, d.order_num,  d.status,
-			(select category_name from minids_products_category where catetory_id = d.parent_id) parent_name
+			(select category_name from minids_products_category where category_id = d.parent_id) parent_name
 		from minids_products_category d
 		where d.category_id = #{categoryId}
 	</select>

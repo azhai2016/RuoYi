@@ -123,7 +123,7 @@
                 $('#scroll-up').toTop(opt);
             }
             queryUserList();
-            queryDeptTree();
+            queryCategoryTree();
         });
 
         function queryUserList() {
@@ -184,8 +184,8 @@
             $.table.init(options);
         }
 
-        function queryDeptTree() {
-            var url = ctx + "production/category/categoryTreeData";
+        function queryCategoryTree() {
+            var url = prefix + "/category/categoryTreeData";
             var options = {
                 url: url,
                 expandLevel: 2,
@@ -194,7 +194,7 @@
             $.tree.init(options);
 
             function zOnClick(event, treeId, treeNode) {
-                $("#deptId").val(treeNode.id);
+                $("#categoryId").val(treeNode.id);
                 $("#parentId").val(treeNode.pId);
                 $.table.search();
             }
@@ -213,7 +213,7 @@
         });
 
         $('#btnRefresh').click(function () {
-            queryDeptTree();
+            queryCategoryTree();
         });
 
         /* 自定义重置-表单重置/隐藏框/树节点选择色/搜索 */

@@ -21,6 +21,8 @@ public interface ProductionCategoryMapper {
          */
         public int selectProductionCategoryCount(ProductionCategory category);
 
+        public List<String> selectProductionCategoryTree(long categoryId);
+
         /**
          * 查询部门是否存在用户
          * 
