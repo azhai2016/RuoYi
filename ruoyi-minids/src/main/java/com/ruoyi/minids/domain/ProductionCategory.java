@@ -26,6 +26,15 @@ public class ProductionCategory extends BaseEntity implements Serializable {
     private String updateBy;
     private Date updateTime;
     private Long excludeId;
+    private String parentName;
+
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
+    }
 
     @JsonIgnore
     public Long getExcludeId() {

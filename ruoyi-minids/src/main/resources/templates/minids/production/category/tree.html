@@ -2,7 +2,7 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<th:block th:include="include :: header('部门树选择')" />
+	<th:block th:include="include :: header('分类选择')" />
 	<th:block th:include="include :: ztree-css" />
 </head>
 <style>
@@ -17,8 +17,8 @@
 </style>
 
 <body class="hold-transition box box-main">
-	<input id="treeId" name="treeId" type="hidden" th:value="${categroy.categoryId}" />
-	<input id="treeName" name="treeName" type="hidden" th:value="${categroy.categoryName}" />
+	<input id="treeId" name="treeId" type="hidden" th:value="${category?.categoryId}" />
+	<input id="treeName" name="treeName" type="hidden" th:value="${category?.categoryName}" />
 	<div class="wrapper">
 		<div class="treeShowHideButton" onclick="$.tree.toggleSearch();">
 			<label id="btnShow" title="显示搜索" style="display:none;">︾</label>
@@ -37,7 +37,7 @@
 	<th:block th:include="include :: footer" />
 	<th:block th:include="include :: ztree-js" />
 	<script th:inline="javascript">
-		var prefix = ctx + "category/dept"
+		var prefix = ctx + "minids/production/category"
 		var deptId = [[${ categroyId }]];
 		var excludeId = [[${ excludeId }]];
 		$(function () {

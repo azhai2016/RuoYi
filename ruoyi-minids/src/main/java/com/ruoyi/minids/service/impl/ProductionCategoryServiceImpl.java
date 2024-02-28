@@ -88,9 +88,10 @@ public class ProductionCategoryServiceImpl implements IProductionCategoryService
             prodCategoryList.removeIf(d -> d.getCategoryId().intValue() == excludeId
                     || ArrayUtils.contains(StringUtils.split(d.getAncestors(), ","), excludeId + ""));
         }
-        List<Ztree> ztrees = initZtree(prodCategoryList);
+        List<Ztree> ztrees = initZtree(prodCategoryList,null);
         return ztrees;
     }
+
 
     /**
      * 根据角色ID查询部门（数据权限）
