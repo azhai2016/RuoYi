@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.ruoyi.minids.mapper.ShopMapper">  
+ 
+    <!-- 省略其他 SQL 映射语句，如插入、更新、删除等 -->  
+	<resultMap type="Shop" id="ShopResult">
+		<id     property="shopId"     column="shop_id"     />
+		<result property="shopName"   column="shop_name"   />
+		<result property="description"     column="description"      />
+        <result property="status"     column="status"      />
+		<result property="createBy"   column="create_by"   />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy"   column="update_by"   />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+
+ 
+    <!-- 查询所有店铺信息 -->  
+    <select id="selectShopList" resultMap="ShopResult">  
+        SELECT * FROM minids_shop  
+    </select>  
+ 
+    <!-- 根据ID查询店铺信息 -->  
+    <select id="selectShopById" parameterType="Long" resultMap="ShopResult">  
+        SELECT * FROM minids_shop WHERE shop_id = #{shopId}  
+    </select>  
+
+    <!-- 根据ID查询店铺信息 -->  
+    <select id="checkShopNameUnique" parameterType="Shop" resultMap="ShopResult" >  
+        SELECT shop_id FROM minids_shop WHERE shop_id = #{shopId}  
+    </select>  
+ 
+    <!-- 插入店铺信息 -->  
+    <insert id="insertShop" parameterType="Shop">   
+        INSERT INTO minids_shop(
+ 			<if test="shopId != null and shopId != 0">shop_id,</if>
+ 			<if test="shopName != null and shopName != 0">shop_name,</if>
+ 			<if test="status != null and status != ''">status,</if>
+ 			<if test="description != null and description != ''">description,</if>
+         	<if test="createBy != null and createBy != ''">create_by,</if>
+ 			create_time
+ 		)VALUES(
+            <if test="shopId != null and shopId != 0">#{shopId},</if>
+ 			<if test="shopName != null and shopName != 0">#{shopName},</if>
+ 			<if test="status != null and status != ''">#{status},</if>
+ 			<if test="description != null and description != ''">#{description},</if>
+         	<if test="createBy != null and createBy != ''">#{createBy},</if>
+ 			sysdate()
+ 		)
+    </insert>  
+ 
+    <!-- 更新店铺信息 -->  
+    <update id="updateShop" parameterType="Shop">  
+        UPDATE minids_shop  
+        SET shop_name = #{shopName},  status = #{status} , 
+        description = #{description} ,update_time = sysdate()
+        WHERE shop_id = #{shopId}  
+    </update>  
+ 
+    <!-- 删除店铺信息 -->  
+    <delete id="deleteShopById" parameterType="Long">  
+        DELETE FROM minids_shop WHERE shop_id = #{shopId}  
+    </delete>  
+ 
+</mapper>

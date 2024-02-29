@@ -47,4 +47,9 @@ public class ProductionServiceImpl implements IProductionService {
         return productionMapper.selectProductAll();
     }
 
+    @Override
+    public void checkProductDataScope(Long productId) {
+        // return productionMapper.checkProductDataScope(productId);
+    }
+
 }

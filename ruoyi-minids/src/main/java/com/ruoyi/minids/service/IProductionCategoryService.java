@@ -6,6 +6,7 @@ import com.ruoyi.common.core.domain.entity.SysDept;
 import com.ruoyi.common.core.domain.entity.SysRole;
 import com.ruoyi.minids.domain.Production;
 import com.ruoyi.minids.domain.ProductionCategory;
+import com.ruoyi.minids.domain.Category;
 
 /**
  * 部门管理 服务层
@@ -14,47 +15,9 @@ import com.ruoyi.minids.domain.ProductionCategory;
  */
 public interface IProductionCategoryService {
 
-    public List<ProductionCategory> selectCategoryAll();
+    public int batchProductionCategory(List<ProductionCategory> productionCategory);
 
-    /**
-     * 查询部门管理数据
-     * 
-     * @param dept 部门信息
-     * @return 部门信息集合
-     */
-    public List<ProductionCategory> selectCategoryList(ProductionCategory productionCategory);
-
-    /**
-     * 查询部门管理树
-     * 
-     * @param 商品分类信息
-     * @return 所有商品分类信息
-     */
-    public List<Ztree> selectCategoryTree(ProductionCategory productionCategory);
-
-    /**
-     * 查询部门管理树（排除下级）
-     * 
-     * @param dept 部门信息
-     * @return 所有部门信息
-     */
-    public List<Ztree> selectCategoryTreeExcludeChild(ProductionCategory productionCategory);
-
-    /**
-     * 根据父部门ID查询下级部门数量
-     * 
-     * @param parentId 父部门ID
-     * @return 结果
-     */
-    public int selectCategoryCount(Long parentId);
-
-    /**
-     * 查询部门是否存在用户
-     * 
-     * @param deptId 部门ID
-     * @return 结果 true 存在 false 不存在
-     */
-    public boolean checkCategoryExistProduction(Long categoryId);
+    public int selectCountProductionCategoryByCategoryId(Long categoryId);
 
     /**
      * 删除部门管理信息
@@ -62,7 +25,7 @@ public interface IProductionCategoryService {
      * @param deptId 部门ID
      * @return 结果
      */
-    public int deleteCategoryById(Long categoryId);
+    public int deleteProductCategoryById(Long categoryId);
 
     /**
      * 新增保存部门信息
@@ -70,47 +33,6 @@ public interface IProductionCategoryService {
      * @param dept 部门信息
      * @return 结果
      */
-    public int insertCategory(ProductionCategory productionCategory);
-
-    /**
-     * 修改保存部门信息
-     * 
-     * @param dept 部门信息
-     * @return 结果
-     */
-    public int updateCategory(ProductionCategory productionCategory);
-
-    /**
-     * 根据部门ID查询信息
-     * 
-     * @param CategoryId 部门ID
-     * @return 部门信息
-     */
-    public ProductionCategory selectCategoryById(Long categoryId);
-
-    /**
-     * 根据ID查询所有子部门（正常状态）
-     * 
-     * @param deptId 部门ID
-     * @return 子部门数
-     */
-    public int selectNormalChildrenCategoryById(Long dategoryId);
-
-    /**
-     * 校验部门名称是否唯一
-     * 
-     * @param dept 部门信息
-     * @return 结果
-     */
-    public boolean checkCategoryNameUnique(ProductionCategory productionCategory);
-
-    /**
-     * 校验部门是否有数据权限
-     * 
-     * @param deptId 部门id
-     */
-    public void checkCategoryDataScope(Long categoryId);
-
-    public List<Ztree> prodCategoryTreeData(Production production);
+    public int insertProductCategory(ProductionCategory productionCategory);
 
 }
