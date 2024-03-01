@@ -14,21 +14,20 @@
 		<result property="updateTime" column="update_time" />
 	</resultMap>
 
-
+    <sql id="selectShopVo">
+       SELECT shop_id,shop_name,status,description,create_by,create_time,update_by,update_time 
+       FROM minids_shop  
+    </sql>
  
     <!-- 查询所有店铺信息 -->  
     <select id="selectShopList" resultMap="ShopResult">  
-        SELECT * FROM minids_shop  
+        <include refid="selectShopVo"/>
     </select>  
  
     <!-- 根据ID查询店铺信息 -->  
     <select id="selectShopById" parameterType="Long" resultMap="ShopResult">  
-        SELECT * FROM minids_shop WHERE shop_id = #{shopId}  
-    </select>  
-
-    <!-- 根据ID查询店铺信息 -->  
-    <select id="checkShopNameUnique" parameterType="Shop" resultMap="ShopResult" >  
-        SELECT shop_id FROM minids_shop WHERE shop_id = #{shopId}  
+            <include refid="selectShopVo"/>
+             WHERE shop_id = #{shopId}  
     </select>  
  
     <!-- 插入店铺信息 -->  

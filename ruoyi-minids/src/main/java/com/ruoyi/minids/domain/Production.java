@@ -13,6 +13,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class Production extends BaseEntity implements Serializable {
 
+    private String id;
     private String saasId = "88888";
     private String storeId;
     private String spuId;

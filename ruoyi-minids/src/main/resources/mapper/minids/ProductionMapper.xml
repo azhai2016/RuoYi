@@ -5,6 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.ruoyi.minids.mapper.ProductionMapper">
 
 <resultMap type="Production" id="productResultMap">
+     <id property="id" column="id"/>
      <id property="saasId" column="saas_id"/>
      <id property="storeId" column="store_id"/>
      <id property="spuId" column="spu_id"/>
@@ -43,9 +44,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<include refid="selectProductionVo"/>
 	</select>
 	
-	<select id="selectProductById" parameterType="String" resultMap="productResultMap">
+	<select id="selectProductById" parameterType="int" resultMap="productResultMap">
 		<include refid="selectProductionVo"/>
-		where  saasId=#{saasId} and storeId = #{storeId} and spuId=#{spuId}
+		where id=#{id}
 	</select>
 	
 	<delete id="deleteProductById" parameterType="String">
@@ -63,6 +64,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    <update id="updateProduct" parameterType="Production">
 	 UPDATE minids_products
 		<set>
+
 		<if test="storeId != null">storeId=#{storeId},</if>
 		<if test="spuId != null">spuId=#{spuId},</if>
 		<if test="title != null and title != ''">title=#{title},</if>

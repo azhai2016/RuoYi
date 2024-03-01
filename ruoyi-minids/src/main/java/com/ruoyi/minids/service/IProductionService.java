@@ -7,7 +7,7 @@ public interface IProductionService {
 
     public List<Production> selectProductList(Production production);
 
-    public Production selectProductById(String saasId, String storeId, String spuId);
+    public Production selectProductById(int productId);
 
     public void deleteProductById(String saasId, String storeId, String spuId);
 
@@ -18,5 +18,7 @@ public interface IProductionService {
     public void insertProduct(Production production);
 
     public List<Production> selectProductAll();
+
+    public void checkProductDataScope(Long productId);
 
 }

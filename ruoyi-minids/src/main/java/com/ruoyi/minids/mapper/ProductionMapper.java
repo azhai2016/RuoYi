@@ -14,7 +14,7 @@ public interface ProductionMapper {
 
         List<Production> selectProductAll();
 
-        Production selectProductById(String saasId, String storeId, String spuId);
+        Production selectProductById(int id);
 
         void deleteProductById(String saasId, String storeId, String spuId);
 
@@ -23,5 +23,7 @@ public interface ProductionMapper {
         void updateProduct(Production production);
 
         void insertProduct(Production production);
+
+        Object checkProductDataScope();
 
 }

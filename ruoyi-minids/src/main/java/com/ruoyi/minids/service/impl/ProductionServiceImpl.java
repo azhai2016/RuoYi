@@ -18,8 +18,8 @@ public class ProductionServiceImpl implements IProductionService {
     }
 
     @Override
-    public Production selectProductById(String saasId, String storeId, String spuId) {
-        return productionMapper.selectProductById(saasId, storeId, spuId);
+    public Production selectProductById(int id) {
+        return productionMapper.selectProductById(id);
     }
 
     @Override

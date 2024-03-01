@@ -4,6 +4,7 @@
 -- ---------------------------- 
 DROP TABLE IF EXISTS `minids_products`;
 CREATE TABLE `minids_products` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
     `saas_id` varchar(255) NOT NULL DEFAULT '88888',
     `store_id` varchar(255) NOT NULL,
     `spu_id` varchar(255) NOT NULL,

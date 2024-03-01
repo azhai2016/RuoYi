@@ -84,7 +84,7 @@ public class ShopController extends BaseController {
     }
 
     @Log(title = "店铺管理", businessType = BusinessType.UPDATE)
-    @RequiresPermissions("minids:shop:add")
+    @RequiresPermissions("minids:shop:edit")
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(@Validated Shop shop) {

@@ -48,7 +48,7 @@ public class ShopServiceImpl implements IShopService {
     @Override
     public boolean checkShopNameUnique(Shop shop) {
         Long shopId = StringUtils.isNull(shop.getShopId()) ? -1L : shop.getShopId();
-        Shop info = shopMapper.checkShopNameUnique(shop);
+        Shop info = shopMapper.selectShopById(shopId);
         if (StringUtils.isNotNull(info) && info.getShopId().longValue() != shopId.longValue()) {
             return UserConstants.NOT_UNIQUE;
         }
