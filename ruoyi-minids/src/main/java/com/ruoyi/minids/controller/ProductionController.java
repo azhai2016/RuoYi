@@ -35,6 +35,7 @@ import org.springframework.validation.annotation.Validated;
 
 import com.ruoyi.minids.domain.Production;
 import com.ruoyi.minids.domain.ProductionCategory;
+import com.ruoyi.minids.domain.Shop;
 import com.ruoyi.minids.service.IProductionService;
 import com.ruoyi.minids.service.IShopService;
 
@@ -121,9 +122,14 @@ public class ProductionController extends BaseController {
 
     @RequiresPermissions("minids:production:edit")
     @GetMapping("/edit/{productId}")
-    public String edit(@PathVariable("productId") Long productId, ModelMap mmap) {
-        productService.checkProductDataScope(productId);
-        // mmap.put("product", productService.selectProductById(productId));
+    public String edit(@PathVariable("productId") int productId, ModelMap mmap) {
+        // productService.checkProductDataScope(productId);
+        System.out.println(">>>>>>>>");
+        System.out.println(productId);
+        Production production = productService.selectProductById(productId);
+        List<Shop> shop = shopService.selectShopList();
+        mmap.put("shops", shop);
+        mmap.put("product", production);
         return prefix + "/edit";
     }
 

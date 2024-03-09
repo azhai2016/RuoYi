@@ -15,13 +15,13 @@ public interface ShopMapper {
     // 自定义查询方法，如果需要的话
     List<Shop> selectShopList();
 
-    Shop selectShopById(Long shopId);
+    Shop selectShopById(String shopId);
 
     int insertShop(Shop shop);
 
     int updateShop(Shop shop);
 
-    int deleteShopById(Long shopId);
+    int deleteShopById(String shopId);
 
     Shop checkShopNameUnique(Shop shop);
 }

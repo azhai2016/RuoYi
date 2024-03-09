@@ -23,12 +23,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      <result property="Etitle" column="_etitle"/>
      <result property="titlePrefixTags" column="title_prefix_tags"/>
      <result property="thumb" column="thumb"/>
-	 <result property="catetoryId" column="catetory_id"/>
+	 <result property="categoryId" column="category_id"/>
+	 <result property="categoryName" column="category_name"/>
+	 
   </resultMap>
 	
 	<sql id="selectProductionVo">
-        select * 
-		from minids_products
+        select a.*,b.category_name 
+		from minids_products a inner join 
+		     minids_category b on a.category_id=b.category_id
     </sql>
 	
 	<select id="selectProductList" parameterType="Production" resultMap="productResultMap">
@@ -50,7 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<delete id="deleteProductById" parameterType="String">
- 		delete from minids_products where saasId=#{saasId} and storeId = #{storeId} and spuId=#{spuId}
+ 		delete from minids_products where id=#{id}
  	</delete>
  	
  	<delete id="deleteProductByIds" parameterType="list">
@@ -81,7 +84,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="Etitle != null and Etitle != ''">Etitle=#{Etitle},</if>
 		<if test="titlePrefixTags != null and titlePrefixTags != ''">titlePrefixTags=#{titlePrefixTags},</if>
 		<if test="thumb != null and thumb != ''">thumb=#{thumb},</if>
-		<if test="catetoryId != null and catetoryId != ''">catetoryId=#{catetoryId},</if>
+		<if test="catetoryId != null and catetoryId != ''">categoryId=#{categoryId},</if>
 		</set>
 		WHERE saasId=#{saasId} and storeId = #{storeId} and spuId=#{spuId}
     </update>
@@ -106,7 +109,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="Etitle != null">Etitle,</if>
 			<if test="titlePrefixTags != null">titlePrefixTags,</if>
 			<if test="thumb != null">thumb</if>
-			<if test="catetoryId != null">catetoryId</if>
+			<if test="categoryId != null">categoryId</if>
 		</trim>
 		<trim prefix="VALUES (" suffix=")" suffixOverrides=",">
 			<if test="saasId != null">#{saasId},</if>
@@ -126,7 +129,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="Etitle != null">#{Etitle},</if>
 			<if test="titlePrefixTags != null">#{titlePrefixTags},</if>
 			<if test="thumb != null">#{thumb}</if>
-			<if test="catetoryId != null">#{catetoryId}</if>
+			<if test="categoryId != null">#{categoryId}</if>
 		</trim>
 	</insert>
 

@@ -2,13 +2,13 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <th:block th:include="include :: header('新增用户')" />
+    <th:block th:include="include :: header('修改商品')" />
     <th:block th:include="include :: select2-css" />
 </head>
 
 <body>
     <div class="main-content">
-        <form id="form-user-add" class="form-horizontal">
+        <form id="form-user-add" class="form-horizontal" th:object="${product}">
             <input name="categoryId" type="hidden" id="treeId" />
             <h4 class="form-header h4">基本信息</h4>
             <div class="row">
@@ -17,7 +17,8 @@
                         <label class="col-xs-2 control-label is-required">店铺：</label>
                         <div class="col-xs-4">
                             <select id="shopId" class="form-control is-required">
-                                <option th:each="shop:${shops}" th:value="${shop.shopId}" th:text="${shop.shopName}"
+                                <option th:each="shop:${shops}" th:value="${shop.shopId}"
+                                    th:selected="${product.storeId == shop.shopId}" th:text="${shop.shopName}"
                                     th:disabled="${shop.status == '1'}"></option>
                             </select>
                         </div>
@@ -30,7 +31,7 @@
                         <label class="col-sm-4 control-label is-required">商品编号：</label>
                         <div class="col-sm-8">
                             <input name="spuId" placeholder="请输入商品编号" class="form-control" type="text" maxlength="30"
-                                required>
+                                th:field="*{spuId}" required>
                         </div>
                     </div>
                 </div>
@@ -41,7 +42,7 @@
                         <label class="col-sm-4 control-label is-required">商品名称：</label>
                         <div class="col-sm-8">
                             <input name="title" placeholder="请输入商品名称" class="form-control" type="text" maxlength="30"
-                                required>
+                                th:field="*{title}" required>
                         </div>
                     </div>
                 </div>
@@ -55,7 +56,7 @@
                         <div class="col-sm-8">
                             <div class="input-group">
                                 <input name="categoryName" onclick="selectCategoryTree()" id="treeName" type="text"
-                                    placeholder="请选择商品分类" class="form-control">
+                                    placeholder="请选择商品分类" class="form-control" th:field="*{categoryName}">
                                 <span class="input-group-addon"><i class="fa fa-search"></i></span>
                             </div>
                         </div>
@@ -69,7 +70,7 @@
                         <div class="col-sm-8">
                             <div class="input-group">
                                 <input id="primaryImage" name="primaryImage" placeholder="请选择商品图片" class="form-control"
-                                    type="text" maxlength="11">
+                                    th:field="*{primaryImage}" type="text" maxlength="11">
                                 <span class="input-group-addon"><i class="fa fa-file-image-o"
                                         onclick="image()"></i></span>
                             </div>
@@ -84,7 +85,8 @@
                         <label class="col-sm-4 control-label ">商品状态：</label>
                         <div class="col-sm-8">
                             <label class="toggle-switch switch-solid">
-                                <input type="checkbox" id="available" checked>
+                                <input type="checkbox" id="available"
+                                    th:checked="${product.available == 1 ? true : false}">
                                 <span></span>
                             </label>
                         </div>
@@ -99,14 +101,14 @@
                         <label class="col-xs-2 control-label">最低售价：</label>
                         <div class="col-xs-2">
                             <input id="minSalePrice" name="minSalePrice" placeholder="最低的售价" class="form-control"
-                                type="text" maxlength="11">
+                                th:field="*{minSalePrice}" type="text" maxlength="11">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-xs-2 control-label">最高售价：</label>
                         <div class="col-xs-2">
-                            <input id="minSalePrice" name="minSalePrice" placeholder="最高的售价" class="form-control"
-                                type="text" maxlength="11">
+                            <input id="minSalePrice" name="maxSalePrice" placeholder="最高的售价" class="form-control"
+                                th:field="*{maxSalePrice}" type="text" maxlength="11">
                         </div>
                     </div>
                 </div>
@@ -116,15 +118,15 @@
                     <div class="form-group">
                         <label class="col-xs-2 control-label">库存数量：</label>
                         <div class="col-xs-2">
-                            <input id="minSalePrice" name="minSalePrice" placeholder="库存数量" class="form-control"
-                                type="text" maxlength="11">
+                            <input id="spuStockQuantity" name="spuStockQuantity" placeholder="库存数量" class="form-control"
+                                th:field="*{maxSalePrice}" type="text" maxlength="11">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-xs-2 control-label">可售数量：</label>
                         <div class="col-xs-2">
-                            <input id="minSalePrice" name="minSalePrice" placeholder="可销数量" class="form-control"
-                                type="text" maxlength="11">
+                            <input id="soldNum" name="soldNum" placeholder="可销数量" class="form-control"
+                                th:field="*{maxSalePrice}" type="text" maxlength="11">
                         </div>
                     </div>
                 </div>
@@ -155,7 +157,7 @@
     <th:block th:include="include :: footer" />
     <th:block th:include="include :: select2-js" />
     <script>
-        var prefix = ctx + "production/category";
+        var prefix = ctx + "production";
 
 
 

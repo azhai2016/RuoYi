@@ -48,8 +48,8 @@ public class ProductionServiceImpl implements IProductionService {
     }
 
     @Override
-    public void checkProductDataScope(Long productId) {
-        // return productionMapper.checkProductDataScope(productId);
+    public void checkProductDataScope(int productId) {
+
     }
 
 }

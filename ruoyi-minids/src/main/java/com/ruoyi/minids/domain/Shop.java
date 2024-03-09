@@ -16,7 +16,7 @@ public class Shop extends BaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /** 店铺ID */
-    private Long shopId;
+    private String shopId;
 
     /** 店铺名称 */
     private String shopName;

@@ -24,6 +24,7 @@ CREATE TABLE `minids_products` (
     `thumb` varchar(255) DEFAULT NULL,
     `category_id` varchar(255) DEFAULT NULL,
     `del_flag` char(1) DEFAULT '0' COMMENT '删除标志（0代表存在 2代表删除）',
+    `remark` varchar(255) DEFAULT NULL,
     PRIMARY KEY (`saas_id`, `store_id`, `spu_id`) USING BTREE
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 SET FOREIGN_KEY_CHECKS = 1;

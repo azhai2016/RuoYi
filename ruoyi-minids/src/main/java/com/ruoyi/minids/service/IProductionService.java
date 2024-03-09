@@ -19,6 +19,6 @@ public interface IProductionService {
 
     public List<Production> selectProductAll();
 
-    public void checkProductDataScope(Long productId);
+    public void checkProductDataScope(int productId);
 
 }

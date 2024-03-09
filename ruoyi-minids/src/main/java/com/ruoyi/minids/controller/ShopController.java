@@ -55,9 +55,9 @@ public class ShopController extends BaseController {
     }
 
     @GetMapping("/add/{shopId}")
-    public String add(@PathVariable("shopId") Long shopId, ModelMap mmap) {
+    public String add(@PathVariable("shopId") String shopId, ModelMap mmap) {
         if (!getSysUser().isAdmin()) {
-            shopId = getSysUser().getDeptId();
+            shopId = getSysUser().getDeptId().toString();
         }
         Object obj = shopService.selectShopById(shopId);
         mmap.put("shop", obj);
@@ -65,7 +65,7 @@ public class ShopController extends BaseController {
     }
 
     @GetMapping("/edit/{shopId}")
-    public String edit(@PathVariable("shopId") Long shopId, ModelMap mmap) {
+    public String edit(@PathVariable("shopId") String shopId, ModelMap mmap) {
 
         Object obj = shopService.selectShopById(shopId);
         mmap.put("shop", obj);

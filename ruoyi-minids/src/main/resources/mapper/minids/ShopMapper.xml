@@ -25,7 +25,7 @@
     </select>  
  
     <!-- 根据ID查询店铺信息 -->  
-    <select id="selectShopById" parameterType="Long" resultMap="ShopResult">  
+    <select id="selectShopById" parameterType="String" resultMap="ShopResult">  
             <include refid="selectShopVo"/>
              WHERE shop_id = #{shopId}  
     </select>  

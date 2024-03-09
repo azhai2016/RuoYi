@@ -243,11 +243,12 @@
 					processData: false,
 					contentType: false,
 					success: function (result) {
-						var event = new CustomEvent('modalClosed', { detail: result });
-						window.parent.document.dispatchEvent(event);
+						//var event = new CustomEvent('modalClosed', { detail: result });
+						//window.parent.document.dispatchEvent(event);
 						$.modal.close();
 						$.modal.closeLoading();
 						$.modal.enable();
+						return result;
 					}
 				})
 			});

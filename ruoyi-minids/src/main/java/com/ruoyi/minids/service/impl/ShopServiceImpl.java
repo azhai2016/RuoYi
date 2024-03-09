@@ -26,7 +26,7 @@ public class ShopServiceImpl implements IShopService {
     }
 
     @Override
-    public Shop selectShopById(Long shopId) {
+    public Shop selectShopById(String shopId) {
         return shopMapper.selectShopById(shopId);
     }
 
@@ -41,15 +41,15 @@ public class ShopServiceImpl implements IShopService {
     }
 
     @Override
-    public int deleteShopById(Long shopId) {
+    public int deleteShopById(String shopId) {
         return shopMapper.deleteShopById(shopId);
     }
 
     @Override
     public boolean checkShopNameUnique(Shop shop) {
-        Long shopId = StringUtils.isNull(shop.getShopId()) ? -1L : shop.getShopId();
+        String shopId = StringUtils.isNull(shop.getShopId()) ? "" : shop.getShopId();
         Shop info = shopMapper.selectShopById(shopId);
-        if (StringUtils.isNotNull(info) && info.getShopId().longValue() != shopId.longValue()) {
+        if (StringUtils.isNotNull(info) && info.getShopId() != shopId) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;

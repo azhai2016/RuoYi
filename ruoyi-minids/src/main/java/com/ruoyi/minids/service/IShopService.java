@@ -10,13 +10,14 @@ public interface IShopService {
 
     List<Shop> selectShopList();
 
-    Shop selectShopById(Long shopId);
+    Shop selectShopById(String string);
 
     int insertShop(Shop shop);
 
     int updateShop(Shop shop);
 
-    int deleteShopById(Long shopId);
+    int deleteShopById(String shopId);
 
     boolean checkShopNameUnique(Shop shop);
+
 }
